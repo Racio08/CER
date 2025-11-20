@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel Administrativo - CER</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f5f5;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #2ecc71, #27ae60);
+            color: white;
+            padding: 2rem;
+            border-radius: 15px;
+            margin-bottom: 2rem;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        .header h1 {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            font-size: 2rem;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .stat-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: white;
+        }
+
+        .stat-icon.consultations {
+            background: linear-gradient(135deg, #3498db, #2980b9);
+        }
+
+        .stat-icon.surveys {
+            background: linear-gradient(135deg, #f39c12, #e67e22);
+        }
+
+        .stat-icon.satisfaction {
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+        }
+
+        .stat-content h3 {
+            font-size: 0.9rem;
+            color: #7f8c8d;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-content .number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+
+        .section {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #ecf0f1;
+        }
+
+        .section-header h2 {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #2c3e50;
+        }
+
+        .btn {
+            padding: 0.5rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #2ecc71, #27ae60);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(46, 204, 113, 0.3);
+        }
+
+        .btn-danger {
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+            color: white;
+        }
+
+        .btn-danger:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(231, 76, 60, 0.3);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            overflow-x: auto;
+        }
+
+        thead {
+            background: #ecf0f1;
+        }
+
+        th, td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #ecf0f1;
+        }
+
+        th {
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        tbody tr:hover {
+            background: #f8f9fa;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 12px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .badge-pending {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .badge-success {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .stars {
+            color: #f39c12;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 3rem;
+            color: #7f8c8d;
+        }
+
+        .empty-state i {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            opacity: 0.3;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .btn-small {
+            padding: 0.35rem 0.75rem;
+            font-size: 0.85rem;
+        }
+
+        @media (max-width: 768px) {
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            table {
+                font-size: 0.85rem;
+            }
+
+            th, td {
+                padding: 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>
+                <i class="fas fa-chart-line"></i>
+                Panel Administrativo CER
+            </h1>
+            <p>Gestión de consultas y encuestas de satisfacción</p>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon consultations">
+                    <i class="fas fa-comments"></i>
+                </div>
+                <div class="stat-content">
+                    <h3>Consultas Recibidas</h3>
+                    <div class="number" id="totalConsultations">0</div>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon surveys">
+                    <i class="fas fa-clipboard-check"></i>
+                </div>
+                <div class="stat-content">
+                    <h3>Encuestas Completadas</h3>
+                    <div class="number" id="totalSurveys">0</div>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon satisfaction">
+                    <i class="fas fa-star"></i>
+                </div>
+                <div class="stat-content">
+                    <h3>Satisfacción Promedio</h3>
+                    <div class="number" id="avgSatisfaction">0</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header">
+                <h2>
+                    <i class="fas fa-inbox"></i>
+                    Consultas Recibidas
+                </h2>
+                <div>
+                    <button class="btn btn-primary" onclick="refreshData()">
+                        <i class="fas fa-sync-alt"></i> Actualizar
+                    </button>
+                    <button class="btn btn-danger" onclick="clearConsultations()">
+                        <i class="fas fa-trash"></i> Limpiar
+                    </button>
+                </div>
+            </div>
+            <div id="consultationsTable"></div>
+        </div>
+
+        <div class="section">
+            <div class="section-header">
+                <h2>
+                    <i class="fas fa-poll"></i>
+                    Encuestas de Satisfacción
+                </h2>
+                <div>
+                    <button class="btn btn-danger" onclick="clearSurveys()">
+                        <i class="fas fa-trash"></i> Limpiar
+                    </button>
+                </div>
+            </div>
+            <div id="surveysTable"></div>
+        </div>
+    </div>
+
+    <script>
+        function loadData() {
+            const consultations = JSON.parse(localStorage.getItem('cer_consultations') || '[]');
+            const surveys = JSON.parse(localStorage.getItem('cer_surveys') || '[]');
+
+            // Actualizar estadísticas
+            document.getElementById('totalConsultations').textContent = consultations.length;
+            document.getElementById('totalSurveys').textContent = surveys.length;
+
+            // Calcular satisfacción promedio
+            if (surveys.length > 0) {
+                const avgSat = surveys.reduce((sum, s) => sum + (s.satisfaction || 0), 0) / surveys.length;
+                document.getElementById('avgSatisfaction').textContent = avgSat.toFixed(1) + ' ⭐';
+            } else {
+                document.getElementById('avgSatisfaction').textContent = 'N/A';
+            }
+
+            // Renderizar tablas
+            renderConsultations(consultations);
+            renderSurveys(surveys);
+        }
+
+        function renderConsultations(consultations) {
+            const container = document.getElementById('consultationsTable');
+
+            if (consultations.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-inbox"></i>
+                        <p>No hay consultas registradas aún</p>
+                    </div>
+                `;
+                return;
+            }
+
+            const table = `
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Fecha</th>
+                            <th>Nombre</th>
+                            <th>Teléfono</th>
+                            <th>Email</th>
+                            <th>Consulta</th>
+                            <th>Estado</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${consultations.reverse().map(c => `
+                            <tr>
+                                <td>${new Date(c.timestamp).toLocaleString('es-AR')}</td>
+                                <td><strong>${c.name}</strong></td>
+                                <td>${c.phone}</td>
+                                <td>${c.email}</td>
+                                <td>${c.consultation ? c.consultation.substring(0, 80) + '...' : 'N/A'}</td>
+                                <td><span class="badge badge-pending">Pendiente</span></td>
+                            </tr>
+                        `).join('')}
+                    </tbody>
+                </table>
+            `;
+
+            container.innerHTML = table;
+        }
+
+        function renderSurveys(surveys) {
+            const container = document.getElementById('surveysTable');
+
+            if (surveys.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-clipboard"></i>
+                        <p>No hay encuestas completadas aún</p>
+                    </div>
+                `;
+                return;
+            }
+
+            const table = `
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Fecha</th>
+                            <th>Nombre</th>
+                            <th>Contacto</th>
+                            <th>Calificación</th>
+                            <th>Comentarios</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${surveys.reverse().map(s => `
+                            <tr>
+                                <td>${new Date(s.timestamp).toLocaleString('es-AR')}</td>
+                                <td><strong>${s.name}</strong></td>
+                                <td>${s.phone}<br><small>${s.email}</small></td>
+                                <td class="stars">${'⭐'.repeat(s.satisfaction || 0)} (${s.satisfaction}/5)</td>
+                                <td>${s.comments || '<em>Sin comentarios</em>'}</td>
+                            </tr>
+                        `).join('')}
+                    </tbody>
+                </table>
+            `;
+
+            container.innerHTML = table;
+        }
+
+        function refreshData() {
+            loadData();
+            showNotification('Datos actualizados', 'success');
+        }
+
+        function clearConsultations() {
+            if (confirm('¿Estás seguro de eliminar todas las consultas?')) {
+                localStorage.removeItem('cer_consultations');
+                loadData();
+                showNotification('Consultas eliminadas', 'success');
+            }
+        }
+
+        function clearSurveys() {
+            if (confirm('¿Estás seguro de eliminar todas las encuestas?')) {
+                localStorage.removeItem('cer_surveys');
+                loadData();
+                showNotification('Encuestas eliminadas', 'success');
+            }
+        }
+
+        function showNotification(message, type) {
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: ${type === 'success' ? '#27ae60' : '#e74c3c'};
+                color: white;
+                padding: 1rem 1.5rem;
+                border-radius: 8px;
+                box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+                z-index: 10000;
+                animation: slideIn 0.3s ease;
+            `;
+            notification.textContent = message;
+            document.body.appendChild(notification);
+
+            setTimeout(() => {
+                notification.style.animation = 'slideOut 0.3s ease';
+                setTimeout(() => notification.remove(), 300);
+            }, 3000);
+        }
+
+        // Cargar datos al iniciar
+        loadData();
+
+        // Auto-refrescar cada 10 segundos
+        setInterval(loadData, 10000);
+    </script>
+</body>
+</html>
