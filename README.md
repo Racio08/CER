@@ -8,8 +8,32 @@
 
 ---
 
+## 🚀 Inicio Rápido
+
+¿Quieres ejecutar el proyecto ahora mismo? Es muy fácil:
+
+### Windows
+Doble clic en: `run.bat`
+
+### Linux / Mac
+```bash
+./run.sh
+```
+
+### Python (todas las plataformas)
+```bash
+python3 run.py
+```
+
+El navegador se abrirá automáticamente en http://localhost:8000
+
+📖 **Más opciones en**: [EJECUTAR.md](EJECUTAR.md)
+
+---
+
 ## 📋 Tabla de Contenidos
 
+- [Inicio Rápido](#-inicio-rápido)
 - [Características](#-características)
 - [Demostración](#-demostración)
 - [Tecnologías](#-tecnologías)
