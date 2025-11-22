@@ -856,6 +856,11 @@ ul {
     object-fit: cover;
 }
 
+.author-avatar.author-icon {
+    background: #26c281;
+    font-size: 1.4rem;
+}
+
 .author-info h4 {
     font-size: 1rem;
     color: var(--text-dark);
