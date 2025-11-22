@@ -39,13 +39,19 @@ echo ""
 
 # Intentar abrir el navegador
 sleep 1
+BROWSER_OPENED=false
 if command -v xdg-open &> /dev/null; then
-    xdg-open "http://localhost:$PORT" &> /dev/null &
+    xdg-open "http://localhost:$PORT" &> /dev/null && BROWSER_OPENED=true
 elif command -v open &> /dev/null; then
-    open "http://localhost:$PORT" &> /dev/null &
+    open "http://localhost:$PORT" &> /dev/null && BROWSER_OPENED=true
 fi
 
-echo -e "${GREEN}🚀 Abriendo el navegador...${NC}"
+if [ "$BROWSER_OPENED" = true ]; then
+    echo -e "${GREEN}🚀 Abriendo el navegador...${NC}"
+else
+    echo -e "${YELLOW}⚠️  No se pudo abrir el navegador automáticamente.${NC}"
+    echo -e "   Por favor, abre manualmente: http://localhost:$PORT"
+fi
 echo ""
 echo -e "${GREEN}🔥 Servidor ejecutándose. Visita:${NC} http://localhost:$PORT"
 echo -e "   ${BLUE}Panel admin:${NC} http://localhost:$PORT/admin.html"

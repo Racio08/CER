@@ -2,12 +2,12 @@
 REM Script para ejecutar el sitio web de CER en Windows
 REM Script to run the CER website on Windows
 
-title CER - Compania de Energias Renovables
+title CER - Compañía de Energías Renovables
 
 SET PORT=8000
 
 echo ============================================================
-echo   [32m[1mCER - Compania de Energias Renovables[0m
+echo   [32m[1mCER - Compañía de Energías Renovables[0m
 echo ============================================================
 echo.
 

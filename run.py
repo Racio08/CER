@@ -51,7 +51,7 @@ def main():
                 print(f"   Por favor, abre manualmente: http://localhost:{PORT}")
             
             print(f"\n🔥 Servidor ejecutándose. Visita: http://localhost:{PORT}")
-            print("   Para ver el panel admin: http://localhost:{PORT}/admin.html")
+            print(f"   Para ver el panel admin: http://localhost:{PORT}/admin.html")
             print("\n⏸️  Presiona Ctrl+C para detener el servidor\n")
             
             # Mantener el servidor corriendo
