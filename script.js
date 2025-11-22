@@ -9,6 +9,9 @@ document.addEventListener('DOMContentLoaded', () => {
     initContactForm();
     initAnimations();
     initNewsletterForm();
+    initFAQ();
+    initCalculator();
+    initBackToTop();
 });
 
 // ===================================
@@ -472,6 +475,132 @@ if ('serviceWorker' in navigator) {
             .catch(error => console.log('SW error:', error));
     });
     */
+}
+
+// ===================================
+// FAQ Accordion
+// ===================================
+function initFAQ() {
+    const faqItems = document.querySelectorAll('.faq-item');
+    
+    faqItems.forEach(item => {
+        const question = item.querySelector('.faq-question');
+        
+        question.addEventListener('click', () => {
+            // Close other items
+            const wasActive = item.classList.contains('active');
+            
+            faqItems.forEach(otherItem => {
+                otherItem.classList.remove('active');
+            });
+            
+            // Toggle current item
+            if (!wasActive) {
+                item.classList.add('active');
+            }
+        });
+    });
+}
+
+// ===================================
+// Energy Savings Calculator
+// ===================================
+function initCalculator() {
+    const calculateBtn = document.getElementById('calculateBtn');
+    const resultsSection = document.getElementById('calculatorResults');
+    
+    if (calculateBtn) {
+        calculateBtn.addEventListener('click', () => {
+            const monthlyBill = parseFloat(document.getElementById('monthlyBill').value);
+            const propertyType = document.getElementById('propertyType').value;
+            const region = document.getElementById('region').value;
+            
+            if (!monthlyBill || monthlyBill <= 0) {
+                showNotification('Por favor, ingresa un monto válido para tu factura mensual.', 'warning');
+                return;
+            }
+            
+            // Calculate savings (70% average)
+            const savingsPercentage = 0.70;
+            const monthlySavings = monthlyBill * savingsPercentage;
+            const yearlySavings = monthlySavings * 12;
+            
+            // Estimate system size (1 kW per $8000 monthly consumption aproximadamente)
+            const systemSize = (monthlyBill / 8000).toFixed(1);
+            
+            // Estimate cost ($1.5M per kW installed aproximadamente)
+            const costPerKW = 1500000;
+            const estimatedCost = (systemSize * costPerKW).toFixed(0);
+            
+            // Payback period
+            const paybackPeriod = (estimatedCost / yearlySavings).toFixed(1);
+            
+            // CO2 reduction (0.5 ton per kW per year aproximadamente)
+            const co2Reduction = (systemSize * 0.5).toFixed(1);
+            
+            // Regional adjustments
+            let regionalMultiplier = 1.0;
+            if (region === 'patagonia') regionalMultiplier = 0.95; // Slightly lower sun
+            if (region === 'norte') regionalMultiplier = 1.15; // More sun
+            if (region === 'cuyo') regionalMultiplier = 1.2; // Most sun
+            
+            // Property type adjustments
+            let propertyMultiplier = 1.0;
+            if (propertyType === 'commercial') propertyMultiplier = 1.3;
+            if (propertyType === 'industrial') propertyMultiplier = 1.5;
+            
+            const adjustedSystemSize = (systemSize * propertyMultiplier).toFixed(1);
+            const adjustedCost = (estimatedCost * propertyMultiplier).toFixed(0);
+            const adjustedMonthlySavings = (monthlySavings * regionalMultiplier).toFixed(0);
+            const adjustedYearlySavings = (adjustedMonthlySavings * 12).toFixed(0);
+            const adjustedPayback = (adjustedCost / adjustedYearlySavings).toFixed(1);
+            const adjustedCO2 = (adjustedSystemSize * 0.5).toFixed(1);
+            
+            // Update results
+            document.getElementById('monthlySavings').textContent = '$' + parseInt(adjustedMonthlySavings).toLocaleString('es-AR');
+            document.getElementById('yearlySavings').textContent = '$' + parseInt(adjustedYearlySavings).toLocaleString('es-AR');
+            document.getElementById('systemSize').textContent = adjustedSystemSize + ' kW';
+            document.getElementById('paybackPeriod').textContent = adjustedPayback + ' años';
+            document.getElementById('estimatedCost').textContent = '$' + parseInt(adjustedCost).toLocaleString('es-AR');
+            document.getElementById('co2Reduction').textContent = adjustedCO2 + ' ton';
+            
+            // Show results
+            resultsSection.style.display = 'block';
+            
+            // Smooth scroll to results
+            setTimeout(() => {
+                resultsSection.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }, 100);
+            
+            showNotification('¡Cálculo completado! Estos son valores estimados.', 'success');
+        });
+    }
+}
+
+// ===================================
+// Back to Top Button
+// ===================================
+function initBackToTop() {
+    const backToTopButton = document.getElementById('backToTop');
+    
+    if (backToTopButton) {
+        // Show/hide button based on scroll position
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                backToTopButton.classList.add('visible');
+            } else {
+                backToTopButton.classList.remove('visible');
+            }
+        });
+        
+        // Scroll to top when clicked
+        backToTopButton.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+    }
 }
 
 // ===================================
