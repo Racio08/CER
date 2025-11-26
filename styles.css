@@ -1291,6 +1291,41 @@ ul {
     transform: scale(1.05);
 }
 
+/* Typing Indicator Animation */
+.typing-indicator .message-content {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+    padding: 10px 15px;
+}
+
+.typing-indicator .message-content span {
+    width: 8px;
+    height: 8px;
+    background: var(--primary-color);
+    border-radius: 50%;
+    animation: typing-bounce 1.4s infinite ease-in-out both;
+}
+
+.typing-indicator .message-content span:nth-child(1) {
+    animation-delay: -0.32s;
+}
+
+.typing-indicator .message-content span:nth-child(2) {
+    animation-delay: -0.16s;
+}
+
+@keyframes typing-bounce {
+    0%, 80%, 100% {
+        transform: scale(0);
+        opacity: 0.5;
+    }
+    40% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
 /* ===================================
    Animations
    =================================== */

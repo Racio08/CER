@@ -1,10 +1,98 @@
 # 🌿 CER - Compañía de Energías Renovables
 
 ![Estado del Proyecto](https://img.shields.io/badge/Estado-Activo-success)
-![Versión](https://img.shields.io/badge/Versión-1.0.0-blue)
+![Versión](https://img.shields.io/badge/Versión-2.0.0-blue)
 ![Licencia](https://img.shields.io/badge/Licencia-MIT-green)
+![ChatGPT](https://img.shields.io/badge/ChatGPT-Integrado-purple)
+![CRM](https://img.shields.io/badge/CRM-Incluido-orange)
 
-**Sitio web corporativo con chatbot inteligente para CER**, empresa líder en soluciones de energía solar en la Patagonia Argentina.
+**Sitio web corporativo con chatbot inteligente potenciado por ChatGPT (GPT-4) y sistema CRM completo** para CER, empresa líder en soluciones de energía solar y eólica en la Patagonia Argentina.
+
+---
+
+## 🚀 Nuevas Características v2.0
+
+### 🤖 Chatbot con ChatGPT (GPT-4)
+- ✅ Respuestas inteligentes contextuales powered by OpenAI
+- ✅ Conocimiento completo sobre servicios de CER
+- ✅ Captura automática de datos de contacto
+- ✅ Historial de conversación persistente
+- ✅ Detección inteligente de intención del cliente
+
+### 💼 Sistema CRM Completo
+- ✅ Base de datos SQLite integrada
+- ✅ Panel administrativo profesional
+- ✅ Registro automático de leads
+- ✅ Historial completo de conversaciones
+- ✅ Estadísticas en tiempo real
+- ✅ Sistema de búsqueda y filtros
+- ✅ Gestión de estados de leads
+
+### 🔌 Backend con Express + Node.js
+- ✅ API RESTful completa
+- ✅ Integración con OpenAI API
+- ✅ Base de datos SQLite
+- ✅ CORS habilitado
+- ✅ Variables de entorno seguras
+
+---
+
+## ⚡ Instalación Rápida
+
+### Opción 1: Script Automático (Recomendado)
+
+**Linux/Mac:**
+```bash
+./install.sh
+```
+
+**Windows:**
+```cmd
+install.bat
+```
+
+### Opción 2: Manual
+
+```bash
+# 1. Instalar dependencias
+npm install
+
+# 2. Configurar variables de entorno
+cp .env.example .env
+nano .env  # Agregar tu API Key de OpenAI
+
+# 3. Iniciar servidor
+npm start
+
+# 4. Abrir en navegador
+# http://localhost:3000
+```
+
+---
+
+## 🔑 Configuración de OpenAI
+
+1. Ve a [platform.openai.com](https://platform.openai.com/api-keys)
+2. Crea una API Key
+3. Edita el archivo `.env`:
+   ```env
+   OPENAI_API_KEY=sk-proj-tu_key_aqui
+   OPENAI_MODEL=gpt-4o-mini
+   ```
+
+**Modelos disponibles:**
+- `gpt-4o` - Más potente (producción)
+- `gpt-4o-mini` - Económico y rápido (recomendado)
+- `gpt-3.5-turbo` - Más barato
+
+---
+
+## 📚 Documentación
+
+- **📖 Guía Completa**: Ver [INSTALACION.md](INSTALACION.md)
+- **⚡ Guía Rápida**: Ver [README-CHATGPT.md](README-CHATGPT.md)
+- **🎯 Demo**: http://localhost:3000 (después de iniciar)
+- **💼 Panel CRM**: http://localhost:3000/crm-admin.html
 
 ---
 

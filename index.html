@@ -687,10 +687,10 @@
     <div class="chatbot-container" id="chatbotContainer">
         <div class="chatbot-header">
             <div class="chatbot-header-content">
-                <i class="fas fa-robot"></i>
+                <i class="fas fa-user-tie"></i>
                 <div>
-                    <h3>Asistente Virtual CER</h3>
-                    <span class="chatbot-status">En línea</span>
+                    <h3>Lucas - Asesor Comercial</h3>
+                    <span class="chatbot-status">🟢 Disponible ahora</span>
                 </div>
             </div>
             <button class="chatbot-close" id="chatbotClose">
@@ -700,19 +700,21 @@
         <div class="chatbot-messages" id="chatbotMessages">
             <div class="message bot-message">
                 <div class="message-content">
-                    👋 ¡Hola! Soy el asistente de CER.\n\n¿Necesitas presupuesto, info o que te llamemos?
+                    👋 ¡Hola! Soy Lucas, tu asesor en energía renovable de CER.<br><br>
+                    Estoy acá para ayudarte a reducir tu factura de luz hasta un 80% 💡<br><br>
+                    ¿En qué te puedo ayudar hoy?
                 </div>
             </div>
         </div>
         <div class="chatbot-quick-replies" id="quickReplies">
-            <button class="quick-reply" data-message="Quiero presupuesto">
-                <i class="fas fa-calculator"></i> Presupuesto
+            <button class="quick-reply" data-message="¿Cuánto puedo ahorrar?">
+                <i class="fas fa-piggy-bank"></i> Calcular ahorro
             </button>
-            <button class="quick-reply" data-message="Que me llamen">
-                <i class="fas fa-phone"></i> Llamar
+            <button class="quick-reply" data-message="Quiero un presupuesto">
+                <i class="fas fa-file-invoice-dollar"></i> Presupuesto
             </button>
-            <button class="quick-reply" data-message="Ver servicios">
-                <i class="fas fa-info-circle"></i> Info
+            <button class="quick-reply" data-message="¿Tienen financiación?">
+                <i class="fas fa-credit-card"></i> Financiación
             </button>
         </div>
         <div class="chatbot-input">
@@ -725,6 +727,7 @@
 
     <!-- Scripts -->
     <script src="script.js"></script>
-    <script src="chatbot.js"></script>
+    <!-- Usar chatbot con OpenAI -->
+    <script src="chatbot-openai.js"></script>
 </body>
 </html>
